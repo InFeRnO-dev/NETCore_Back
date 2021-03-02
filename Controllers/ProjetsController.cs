@@ -35,5 +35,23 @@ namespace NETCore_Back.Controllers
                 var projet = new ModelProjets().GetById(id);
                 return projet;
             }
-        }
+
+            [HttpPost("add")]
+            public void Insert(Projets projets)
+            {
+                new ModelProjets().Insert(projets);
+            }
+
+            [HttpPut("edit/{id}")]
+            public void Update(int id, Projets projets)
+            {
+                new ModelProjets().Update(id, projets);
+            }
+
+            [HttpDelete("delete/{id}")]
+            public void Delete(int id)
+            {
+                new ModelProjets().Delete(id);
+            }
+    }
 }

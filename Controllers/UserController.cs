@@ -33,5 +33,23 @@ namespace NETCore_Back.Controllers
             return user;
 
         }
+
+        [HttpPost("add")]
+        public void Insert(User user)
+        {
+            new ModelUser().Insert(user);
+        }
+
+        [HttpPut("edit/{id_user}")]
+        public void Update(string id_user, User user)
+        {
+            new ModelUser().Update(id_user, user);
+        }
+
+        [HttpDelete("delete/{id_user}")]
+        public void Delete(string id_user)
+        {
+            new ModelUser().Delete(id_user);        
+        }
     }
 }

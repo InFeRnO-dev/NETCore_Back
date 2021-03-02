@@ -53,5 +53,33 @@ namespace NETCore_Back.Model
             return tache;
 
         }
+        public void Insert(Taches taches)
+        {
+            string insert = $"INSERT INTO taches(Libelle, Description, Id_user, Date_debut_theorique, Date_debut_reelle, Charge, Termine, Id_tache_liee) values ('{taches.Libelle}', '{taches.Description}', '{taches.Id_user}', '{taches.Date_debut_theorique}', '{taches.Date_debut_reelle}', {taches.Charge}, {taches.Termine}, {taches.Id_Tache_Liee})";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(insert, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            sdr.Read();
+        }
+
+        public void Update(int id, Taches taches)
+        {
+            string update = $"UPDATE taches SET Libelle = '{taches.Libelle}', Description = '{taches.Description}', Id_user ='{taches.Id_user}', Date_debut_theorique = '{taches.Date_debut_theorique}', Date_debut_reelle = '{taches.Date_debut_reelle}', Charge = {taches.Charge}, Termine = {taches.Termine}, Id_tache_liee = {taches.Id_Tache_Liee} WHERE Id = {id}";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(update, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            sdr.Read();
+        }
+        public void Delete(int id)
+        {
+            string delete = $"DELETE FROM taches WHERE id = {id}";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(delete, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            sdr.Read();
+        }
     }
 }

@@ -32,5 +32,23 @@ namespace NETCore_Back.Controllers
             var jalon = new ModelJalons().GetById(id);
             return jalon;
         }
+
+        [HttpPost("add")]
+        public void Insert(Jalons jalons)
+        {
+            new ModelJalons().Insert(jalons);
+        }
+
+        [HttpPut("edit/{id}")]
+        public void Update(int id, Jalons jalons)
+        {
+            new ModelJalons().Update(id, jalons);
+        }
+
+        [HttpDelete("delete/{id}")]
+        public void Delete(int id)
+        {
+            new ModelJalons().Delete(id);
+        }
     }
 }

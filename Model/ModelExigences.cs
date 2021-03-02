@@ -42,5 +42,33 @@ namespace NETCore_Back.Model
             exigence.Fonctionnel = sdr.GetInt32(3);
             return exigence;
         }
+        public void Insert(Exigences exigences)
+        {
+            string insert = $"INSERT INTO exigences(Id_user, Nom) values ('{exigences.Description}', '{exigences.Type}', {exigences.Fonctionnel})";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(insert, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            sdr.Read();
+        }
+
+        public void Update(int id, Exigences exigences)
+        {
+            string update = $"UPDATE exigences SET Description = '{exigences.Description}', Type ='{exigences.Type}', Fonctionnel = {exigences.Fonctionnel} WHERE Id = {id}";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(update, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            sdr.Read();
+        }
+        public void Delete(int id)
+        {
+            string delete = $"DELETE FROM exigences WHERE id = {id}";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(delete, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            sdr.Read();
+        }
     }
 }

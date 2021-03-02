@@ -42,5 +42,33 @@ namespace NETCore_Back.Model
             return projet;
 
         }
+        public void Insert(Projets projets)
+        {
+            string insert = $"INSERT INTO projets(Id_user, Nom) values ('{projets.Id_user}', '{projets.Nom}')";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(insert, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            sdr.Read();
+        }
+
+        public void Update(int id, Projets projets)
+        {
+            string update = $"UPDATE projets SET Id_user = '{projets.Id_user}', Nom ='{projets.Nom}' WHERE Id = {id}";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(update, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            sdr.Read();
+        }
+        public void Delete(int id)
+        {
+            string delete = $"DELETE FROM projets WHERE id = {id}";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(delete, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            sdr.Read();
+        }
     }
 }

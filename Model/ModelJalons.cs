@@ -44,5 +44,33 @@ namespace NETCore_Back.Model
             jalon.Date_livraison_reelle = sdr.GetDateTime(4);
             return jalon;
         }
+        public void Insert(Jalons jalons)
+        {
+            string insert = $"INSERT INTO jalons(Libelle, Id_user, Date_livraison_prevue, Date_livraison_reelle) values ('{jalons.Libelle}', '{jalons.Id_user}', '{jalons.Date_livraison_prevue}', '{jalons.Date_livraison_reelle}')";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(insert, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            sdr.Read();
+        }
+
+        public void Update(int id, Jalons jalons)
+        {
+            string update = $"UPDATE jalons SET Libelle = '{jalons.Libelle}', Id_user ='{jalons.Id_user}', Date_livraison_prevue = '{jalons.Date_livraison_prevue}', Date_livraison_reelle = '{jalons.Date_livraison_reelle}' WHERE Id = {id}";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(update, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            sdr.Read();
+        }
+        public void Delete(int id)
+        {
+            string delete = $"DELETE FROM jalons WHERE id = {id}";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(delete, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            sdr.Read();
+        }
     }
 }

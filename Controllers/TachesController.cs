@@ -33,5 +33,23 @@ namespace NETCore_Back.Controllers
                 var tache = new ModelTaches().GetById(id);
                 return tache;
             }
-        }
+
+            [HttpPost("add")]
+            public void Insert(Taches taches)
+            {
+                new ModelTaches().Insert(taches);
+            }
+
+            [HttpPut("edit/{id}")]
+            public void Update(int id, Taches taches)
+            {
+                new ModelTaches().Update(id, taches);
+            }
+
+            [HttpDelete("delete/{id}")]
+            public void Delete(int id)
+            {
+                new ModelTaches().Delete(id);
+            }
+    }
 }

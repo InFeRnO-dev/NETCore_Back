@@ -33,5 +33,23 @@ namespace NETCore_Back.Controllers
                 var exigence = new ModelExigences().GetById(id);
                 return exigence;
             }
+
+            [HttpPost("add")]
+            public void Insert(Exigences exigences)
+            {
+                new ModelExigences().Insert(exigences);
+            }
+
+            [HttpPut("edit/{id}")]
+            public void Update(int id, Exigences exigences)
+            {
+                new ModelExigences().Update(id, exigences);
+            }
+
+            [HttpDelete("delete/{id}")]
+            public void Delete(int id)
+            {
+                new ModelExigences().Delete(id);
+            }
     }
 }
