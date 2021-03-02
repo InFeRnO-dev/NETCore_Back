@@ -26,6 +26,7 @@ namespace NETCore_Back
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            //services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +47,12 @@ namespace NETCore_Back
             {
                 endpoints.MapControllers();
             });
+
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute("GetById", "{controller}/{id}");
+            //});
+ 
         }
     }
 }
