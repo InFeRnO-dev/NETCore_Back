@@ -36,22 +36,22 @@ namespace NETCore_Back.Controllers
                 return projet;
             }
 
-            [HttpPost("add")]
+            [HttpPost]
             public void Insert(Projets projets)
             {
                 new ModelProjets().Insert(projets);
             }
 
-            [HttpPut("edit/{id}")]
-            public void Update(int id, Projets projets)
+            [HttpPut]
+            public void Update(Projets projets)
             {
-                new ModelProjets().Update(id, projets);
+                new ModelProjets().Update(projets);
             }
 
-            [HttpDelete("delete/{id}")]
-            public void Delete(int id)
+            [HttpDelete]
+            public void Delete(Projets projets)
             {
-                new ModelProjets().Delete(id);
+                new ModelProjets().Delete(projets);
             }
     }
 }

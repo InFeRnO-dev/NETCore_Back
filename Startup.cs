@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,6 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using MySql.Data.MySqlClient;
+using NETCore_Back.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,16 +47,19 @@ namespace NETCore_Back
 
             app.UseAuthorization();
 
+            // Configuration CORS.
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute("GetById", "{controller}/{id}");
-            //});
- 
+            
+
         }
     }
 }

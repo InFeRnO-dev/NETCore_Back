@@ -7,10 +7,10 @@ namespace NETCore_Back
 {
     public class Liaison
     {
-        private int Id { get; }
-        private int Id_Projet { get; }
-        private int Id_Exigences { get; }
-        private int Id_Taches { get; }
-        private int Id_Jalons { get; }
+        public int Id { get; set; }
+        public int Id_Projets { get; set; }
+        public int Id_Exigences { get; set; }
+        public int Id_Taches { get; set; }
+        public int Id_Jalons { get; set; }
     }
 }

@@ -20,7 +20,13 @@ namespace NETCore_Back.Controllers
                 _logger = logger;
             }
 
-            [HttpGet]
+            [HttpGet("lastid")]
+            public int GetLastId()
+            {
+                return new ModelExigences().GetLastId();
+            }
+
+        [HttpGet]
             public IEnumerable<Exigences> Get()
             {
                 var exigences = new ModelExigences().GetAll();
@@ -34,22 +40,22 @@ namespace NETCore_Back.Controllers
                 return exigence;
             }
 
-            [HttpPost("add")]
+            [HttpPost]
             public void Insert(Exigences exigences)
             {
                 new ModelExigences().Insert(exigences);
             }
 
-            [HttpPut("edit/{id}")]
-            public void Update(int id, Exigences exigences)
+            [HttpPut]
+            public void Update(Exigences exigences)
             {
-                new ModelExigences().Update(id, exigences);
+                new ModelExigences().Update(exigences);
             }
 
-            [HttpDelete("delete/{id}")]
-            public void Delete(int id)
+            [HttpDelete]
+            public void Delete(Exigences exigences)
             {
-                new ModelExigences().Delete(id);
+                new ModelExigences().Delete(exigences);
             }
     }
 }

@@ -52,18 +52,18 @@ namespace NETCore_Back.Model
             sdr.Read();
         }
 
-        public void Update(int id, Projets projets)
+        public void Update(Projets projets)
         {
-            string update = $"UPDATE projets SET Id_user = '{projets.Id_user}', Nom ='{projets.Nom}' WHERE Id = {id}";
+            string update = $"UPDATE projets SET Id_user = '{projets.Id_user}', Nom ='{projets.Nom}' WHERE Id = {projets.Id}";
             var conn = new DbConnection();
             var cmd = new MySqlCommand(update, conn.Dbconn());
             MySqlDataReader sdr;
             sdr = cmd.ExecuteReader();
             sdr.Read();
         }
-        public void Delete(int id)
+        public void Delete(Projets projets)
         {
-            string delete = $"DELETE FROM projets WHERE id = {id}";
+            string delete = $"DELETE FROM projets WHERE id = {projets.Id}";
             var conn = new DbConnection();
             var cmd = new MySqlCommand(delete, conn.Dbconn());
             MySqlDataReader sdr;

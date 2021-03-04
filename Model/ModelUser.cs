@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,13 @@ namespace NETCore_Back.Model
 {
     public class ModelUser
     {
+        public ModelUser() {
+            if (this.GetAll().Count == 0)
+            {
+                this.Insert(new User { Id_user = "ADE", Username = "Alexis", Password = "alexis", Droits = 2 });
+                this.Insert(new User { Id_user = "BOS", Username = "BOSS", Password = "boss", Droits = 1 });
+            }
+        }
         public List<User> GetAll()
         {
             var users = new List<User>();
@@ -53,24 +61,24 @@ namespace NETCore_Back.Model
             sdr.Read();
         }
 
-        public void Update(string id, User user)
+        public void Update(User user)
         {
-            string update = $"UPDATE user SET Id_user = '{user.Id_user}', Username ='{user.Username}', Password = '{user.Password}', Droits = {user.Droits} WHERE Id_user = '{id}'";
+            string update = $"UPDATE user SET Id_user = '{user.Id_user}', Username ='{user.Username}', Password = '{user.Password}', Droits = {user.Droits} WHERE Id_user = '{user.Id_user}'";
             var conn = new DbConnection();
             var cmd = new MySqlCommand(update, conn.Dbconn());
             MySqlDataReader sdr;
             sdr = cmd.ExecuteReader();
             sdr.Read();
         }
-        public void Delete(string id)
+        public void Delete(User user)
         {
-            string delete = $"DELETE FROM user WHERE id_user = '{id}'";
+            string delete = $"DELETE FROM user WHERE id_user = '{user.Id_user}'";
             var conn = new DbConnection();
             var cmd = new MySqlCommand(delete, conn.Dbconn());
             MySqlDataReader sdr;
             sdr = cmd.ExecuteReader();
             sdr.Read();
-            
+
         }
     }
 }
