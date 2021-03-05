@@ -12,8 +12,8 @@ namespace NETCore_Back.Model
         public ModelUser() {
             if (this.GetAll().Count == 0)
             {
-                this.Insert(new User { Id_user = "ADE", Username = "Alexis", Password = "alexis", Droits = 2 });
-                this.Insert(new User { Id_user = "BOS", Username = "BOSS", Password = "boss", Droits = 1 });
+                this.Insert(new User { Id_user = "ADE", Username = "Alexis", Password = "ade", Droits = 2 });
+                this.Insert(new User { Id_user = "CHF", Username = "Chef", Password = "chf", Droits = 1 });
             }
         }
         public List<User> GetAll()
@@ -50,6 +50,30 @@ namespace NETCore_Back.Model
             user.Droits = sdr.GetInt32(3);
             return user;
 
+        }
+        public User Authenticate(string login, string password)
+        {
+            var user = new User();
+            string select = $"SELECT * FROM user WHERE id_user = '{login}' AND password = '{password}'";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(select, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            if(sdr.HasRows == true)
+            {
+                sdr.Read();
+                user.Id_user = sdr.GetString(0);
+                user.Username = sdr.GetString(1);
+                user.Password = sdr.GetString(2);
+                user.Droits = sdr.GetInt32(3);
+                return user;
+            }
+            else
+            {
+                return user = null;
+            }
+            
+           
         }
         public void Insert(User user)
         {

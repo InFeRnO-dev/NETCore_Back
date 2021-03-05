@@ -14,8 +14,9 @@ namespace NETCore_Back
         public DateTime Date_debut_theorique { get; set; }
         public DateTime Date_debut_reelle { get; set; }
         public int Charge { get; set; }
+        public int Encours { get; set; }
         public int Termine { get; set; }
-        public int Id_Tache_Liee { get; set; }
+        public int Id_tache_liee { get; set; }
     
     }
 }

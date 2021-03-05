@@ -19,6 +19,13 @@ namespace NETCore_Back.Controllers
             _logger = logger;
         }
 
+        [HttpGet("exigence/{id}")]
+        public IEnumerable<Taches> GetAllByIdExigence(int id)
+        {
+            var taches = new ModelLiaison().GetTachesByIdExigence(id);
+            return taches.ToArray();
+        }
+
         [HttpGet("projet/{id}")]
         public IEnumerable<Exigences> GetExigencesByProject(int id)
         {
@@ -30,6 +37,12 @@ namespace NETCore_Back.Controllers
         public void InsertExigenceForProjet(Liaison liaison)
         {
             new ModelLiaison().InsertExigenceForProjet(liaison);
+        }
+
+        [HttpPost("exigence")]
+        public void InsertTacheForExigence(Liaison liaison)
+        {
+            new ModelLiaison().InsertTacheForExigence(liaison);
         }
     }
 }

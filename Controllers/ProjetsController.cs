@@ -22,6 +22,13 @@ namespace NETCore_Back.Controllers
                 _logger = logger;
             }
 
+            [HttpGet("user/{id}")]
+            public IEnumerable<Projets> GetAllByIduser(string id)
+            {
+                var projets = new ModelProjets().GetAllByIduser(id);
+                return projets.ToArray();
+            }
+
             [HttpGet]
             public IEnumerable<Projets> Get()
             {

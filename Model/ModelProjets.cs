@@ -9,6 +9,24 @@ namespace NETCore_Back.Model
 {
     public class ModelProjets
     {
+        public List<Projets> GetAllByIduser(string id)
+        {
+            var projets = new List<Projets>();
+            string select = $"SELECT * FROM projets WHERE id_user = '{id}'";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(select, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            while (sdr.Read())
+            {
+                var projet = new Projets();
+                projet.Id = sdr.GetInt32(0);
+                projet.Id_user = sdr.GetString(1);
+                projet.Nom = sdr.GetString(2);
+                projets.Add(projet);
+            }
+            return projets;
+        }
         public List<Projets> GetAll()
         {
             var projets = new List<Projets>();

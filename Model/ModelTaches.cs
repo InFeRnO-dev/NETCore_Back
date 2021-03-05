@@ -8,6 +8,16 @@ namespace NETCore_Back.Model
 {
     public class ModelTaches
     {
+        public int GetLastId()
+        {
+            string select = "SELECT id from taches order by id desc limit 1";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(select, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            sdr.Read();
+            return sdr.GetInt32(0);
+        }
         public List<Taches> GetAll()
         {
             var taches = new List<Taches>();
@@ -26,8 +36,9 @@ namespace NETCore_Back.Model
                 tache.Date_debut_theorique = sdr.GetDateTime(4);
                 tache.Date_debut_reelle = sdr.GetDateTime(5);
                 tache.Charge = sdr.GetInt32(6);
-                tache.Termine = sdr.GetInt32(7);
-                tache.Id_Tache_Liee = sdr.GetInt32(8);
+                tache.Encours = sdr.GetInt32(7);
+                tache.Termine = sdr.GetInt32(8);
+                tache.Id_tache_liee = sdr.GetInt32(9);
                 taches.Add(tache);
             }
             return taches;
@@ -48,14 +59,27 @@ namespace NETCore_Back.Model
             tache.Date_debut_theorique = sdr.GetDateTime(4);
             tache.Date_debut_reelle = sdr.GetDateTime(5);
             tache.Charge = sdr.GetInt32(6);
-            tache.Termine = sdr.GetInt32(7);
-            tache.Id_Tache_Liee = sdr.GetInt32(8);
+            tache.Encours = sdr.GetInt32(7);
+            tache.Termine = sdr.GetInt32(8);
+            tache.Id_tache_liee = sdr.GetInt32(9);
             return tache;
 
         }
         public void Insert(Taches taches)
         {
-            string insert = $"INSERT INTO taches(Libelle, Description, Id_user, Date_debut_theorique, Date_debut_reelle, Charge, Termine, Id_tache_liee) values ('{taches.Libelle}', '{taches.Description}', '{taches.Id_user}', '{taches.Date_debut_theorique}', '{taches.Date_debut_reelle}', {taches.Charge}, {taches.Termine}, {taches.Id_Tache_Liee})";
+            /*DateTime dt=new DateTime();
+            DateTime.TryParse(taches.Date_debut_theorique.ToString("yyyy-MM-dd HH:mm:ss"), out dt);
+            String dtStr = dt.ToString().Replace('/' , '-');
+            DateTime dr = new DateTime();
+            DateTime.TryParse(taches.Date_debut_reelle.ToString("yyyy-MM-dd HH:mm:ss"), out dr);
+            String drStr = dr.ToString().Replace('/', '-');*/
+            string b = taches.Date_debut_theorique.ToString("yyyy-MM-dd hh:mm:ss");
+            string a = taches.Date_debut_reelle.ToString("yyyy-MM-dd hh:mm:ss");
+
+            Console.WriteLine(taches.Date_debut_theorique);
+
+            //Console.WriteLine(dtStr);
+            string insert = $"INSERT INTO taches(Libelle, Description, Id_user, Date_debut_theorique, Date_debut_reelle, Charge, Encours, Termine, Id_tache_liee) values ('{taches.Libelle}', '{taches.Description}', '{taches.Id_user}', '{b}', '{a}', {taches.Charge}, {taches.Encours}, {taches.Termine}, {taches.Id_tache_liee})";
             var conn = new DbConnection();
             var cmd = new MySqlCommand(insert, conn.Dbconn());
             MySqlDataReader sdr;
@@ -63,18 +87,18 @@ namespace NETCore_Back.Model
             sdr.Read();
         }
 
-        public void Update(int id, Taches taches)
+        public void Update(Taches taches)
         {
-            string update = $"UPDATE taches SET Libelle = '{taches.Libelle}', Description = '{taches.Description}', Id_user ='{taches.Id_user}', Date_debut_theorique = '{taches.Date_debut_theorique}', Date_debut_reelle = '{taches.Date_debut_reelle}', Charge = {taches.Charge}, Termine = {taches.Termine}, Id_tache_liee = {taches.Id_Tache_Liee} WHERE Id = {id}";
+            string update = $"UPDATE taches SET Libelle = '{taches.Libelle}', Description = '{taches.Description}', Id_user ='{taches.Id_user}', Date_debut_theorique = '{taches.Date_debut_theorique}', Date_debut_reelle = '{taches.Date_debut_reelle}', Charge = {taches.Charge}, Encours = {taches.Encours}, Termine = {taches.Termine}, Id_tache_liee = {taches.Id_tache_liee} WHERE Id = {taches.Id}";
             var conn = new DbConnection();
             var cmd = new MySqlCommand(update, conn.Dbconn());
             MySqlDataReader sdr;
             sdr = cmd.ExecuteReader();
             sdr.Read();
         }
-        public void Delete(int id)
+        public void Delete(Taches taches)
         {
-            string delete = $"DELETE FROM taches WHERE id = {id}";
+            string delete = $"DELETE FROM taches WHERE id = {taches.Id}";
             var conn = new DbConnection();
             var cmd = new MySqlCommand(delete, conn.Dbconn());
             MySqlDataReader sdr;

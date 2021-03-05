@@ -8,6 +8,31 @@ namespace NETCore_Back.Model
 {
     public class ModelLiaison
     {
+        public List<Taches> GetTachesByIdExigence(int id)
+        {
+            var taches = new List<Taches>();
+            string select = $"SELECT * FROM taches LEFT JOIN liaison ON liaison.Id_taches = taches.Id WHERE Id_Exigences = {id}";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(select, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            while (sdr.Read())
+            {
+                var tache = new Taches();
+                tache.Id = sdr.GetInt32(0);
+                tache.Libelle = sdr.GetString(1);
+                tache.Description = sdr.GetString(2);
+                tache.Id_user = sdr.GetString(3);
+                tache.Date_debut_theorique = sdr.GetDateTime(4);
+                tache.Date_debut_reelle = sdr.GetDateTime(5);
+                tache.Charge = sdr.GetInt32(6);
+                tache.Encours = sdr.GetInt32(7);
+                tache.Termine = sdr.GetInt32(8);
+                tache.Id_tache_liee = sdr.GetInt32(9);
+                taches.Add(tache);
+            }
+            return taches;
+        }
         public List<Exigences> GetExigencesByProjet(int id)
         { 
             var exigences = new List<Exigences>();
@@ -45,6 +70,15 @@ namespace NETCore_Back.Model
         public void InsertExigenceForProjet(Liaison liaison)
         {
             string insert = $"INSERT INTO liaison(Id_Projets, Id_Exigences) values ({liaison.Id_Projets}, {liaison.Id_Exigences})";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(insert, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            sdr.Read();
+        }
+        public void InsertTacheForExigence(Liaison liaison)
+        {
+            string insert = $"INSERT INTO liaison(Id_Taches, Id_Exigences) values ({liaison.Id_Taches}, {liaison.Id_Exigences})";
             var conn = new DbConnection();
             var cmd = new MySqlCommand(insert, conn.Dbconn());
             MySqlDataReader sdr;

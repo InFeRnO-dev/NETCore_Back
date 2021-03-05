@@ -20,6 +20,12 @@ namespace NETCore_Back.Controllers
                 _logger = logger;
             }
 
+            [HttpGet("lastid")]
+            public int GetLastId()
+            {
+                return new ModelTaches().GetLastId();
+            }
+
             [HttpGet]
             public IEnumerable<Taches> Get()
             {
@@ -34,22 +40,22 @@ namespace NETCore_Back.Controllers
                 return tache;
             }
 
-            [HttpPost("add")]
+            [HttpPost]
             public void Insert(Taches taches)
             {
                 new ModelTaches().Insert(taches);
             }
 
-            [HttpPut("edit/{id}")]
-            public void Update(int id, Taches taches)
+            [HttpPut]
+            public void Update(Taches taches)
             {
-                new ModelTaches().Update(id, taches);
+                new ModelTaches().Update(taches);
             }
 
-            [HttpDelete("delete/{id}")]
-            public void Delete(int id)
+            [HttpDelete]
+            public void Delete(Taches taches)
             {
-                new ModelTaches().Delete(id);
+                new ModelTaches().Delete(taches);
             }
     }
 }

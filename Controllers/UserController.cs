@@ -34,6 +34,13 @@ namespace NETCore_Back.Controllers
 
         }
 
+        [HttpGet("{login}/{password}")]
+        public User Authenticate(string login, string password)
+        {
+            var user = new ModelUser().Authenticate(login, password);
+            return user;
+        }
+
         [HttpPost]
         public void Insert(User user)
         {
