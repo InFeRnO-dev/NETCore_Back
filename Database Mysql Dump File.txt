@@ -1,0 +1,79 @@
+Table User :
+
+CREATE TABLE `user` (
+	`Id_user` VARCHAR(3) NOT NULL,
+	`Username` VARCHAR(50) NULL DEFAULT NULL,
+	`Password` VARCHAR(50) NULL DEFAULT NULL,
+	`Droits` INT(1) NULL DEFAULT NULL,
+	PRIMARY KEY (`Id_user`),
+	UNIQUE INDEX `Id_user` (`Id_user`)
+)
+
+Table Projets :
+
+CREATE TABLE `projets` (
+	`Id` INT(11) NOT NULL AUTO_INCREMENT,
+	`Id_user` VARCHAR(3) NOT NULL,
+	`Nom` VARCHAR(50) NULL DEFAULT NULL,
+	PRIMARY KEY (`Id`),
+	INDEX `FK_projets_user` (`Id_user`),
+	CONSTRAINT `FK_projets_user` FOREIGN KEY (`Id_user`) REFERENCES `user` (`Id_user`) ON UPDATE CASCADE ON DELETE CASCADE
+)
+
+Table Exigences :
+
+CREATE TABLE `exigences` (
+	`Id` INT(11) NOT NULL AUTO_INCREMENT,
+	`Description` VARCHAR(255) NULL DEFAULT NULL,
+	`Type` VARCHAR(100) NULL DEFAULT NULL,
+	`Fonctionnel` TINYINT(4) NULL DEFAULT '1',
+	PRIMARY KEY (`Id`)
+)
+
+Table Taches :
+
+CREATE TABLE `taches` (
+	`Id` INT(11) NOT NULL AUTO_INCREMENT,
+	`Libelle` VARCHAR(50) NULL DEFAULT NULL,
+	`Description` TEXT NULL,
+	`Id_user` VARCHAR(3) NOT NULL,
+	`Date_debut_theorique` DATETIME NOT NULL,
+	`Date_debut_reelle` DATETIME NULL DEFAULT NULL,
+	`Charge` INT(11) NULL DEFAULT NULL,
+	`Encours` TINYINT(1) NOT NULL DEFAULT '0',
+	`Termine` TINYINT(1) NOT NULL DEFAULT '0',
+	`Id_tache_liee` INT(11) NULL DEFAULT NULL,
+	PRIMARY KEY (`Id`),
+	INDEX `FK_taches_user` (`Id_user`),
+	CONSTRAINT `FK_taches_user` FOREIGN KEY (`Id_user`) REFERENCES `user` (`Id_user`) ON UPDATE CASCADE ON DELETE CASCADE
+)
+
+Table Jalons :
+
+CREATE TABLE `jalons` (
+	`Id` INT(11) NOT NULL AUTO_INCREMENT,
+	`Libelle` VARCHAR(255) NULL DEFAULT NULL,
+	`Id_user` VARCHAR(3) NULL DEFAULT NULL,
+	`Date_livraion_prevue` DATETIME NULL DEFAULT NULL,
+	`Date_livraison_reelle` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`Id`),
+	INDEX `FK_jalons_user` (`Id_user`),
+	CONSTRAINT `FK_jalons_user` FOREIGN KEY (`Id_user`) REFERENCES `user` (`Id_user`)
+)
+
+CREATE TABLE `liaison` (
+	`Id` INT(11) NOT NULL AUTO_INCREMENT,
+	`Id_Projets` INT(11) NULL DEFAULT NULL,
+	`Id_Exigences` INT(11) NULL DEFAULT NULL,
+	`Id_Taches` INT(11) NULL DEFAULT NULL,
+	`Id_Jalons` INT(11) NULL DEFAULT NULL,
+	PRIMARY KEY (`Id`),
+	INDEX `FK__exigences` (`Id_Exigences`),
+	INDEX `FK__taches` (`Id_Taches`),
+	INDEX `FK_liaison_exigences_taches_jalons` (`Id_Jalons`),
+	INDEX `FK_liaison_exigences_taches_jalons_projets` (`Id_Projets`),
+	CONSTRAINT `FK__exigences` FOREIGN KEY (`Id_Exigences`) REFERENCES `exigences` (`Id`) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT `FK__taches` FOREIGN KEY (`Id_Taches`) REFERENCES `taches` (`Id`) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT `FK_liaison_exigences_taches_jalons` FOREIGN KEY (`Id_Jalons`) REFERENCES `jalons` (`Id`),
+	CONSTRAINT `FK_liaison_exigences_taches_jalons_projets` FOREIGN KEY (`Id_Projets`) REFERENCES `projets` (`Id`)
+)

@@ -67,19 +67,10 @@ namespace NETCore_Back.Model
         }
         public void Insert(Taches taches)
         {
-            /*DateTime dt=new DateTime();
-            DateTime.TryParse(taches.Date_debut_theorique.ToString("yyyy-MM-dd HH:mm:ss"), out dt);
-            String dtStr = dt.ToString().Replace('/' , '-');
-            DateTime dr = new DateTime();
-            DateTime.TryParse(taches.Date_debut_reelle.ToString("yyyy-MM-dd HH:mm:ss"), out dr);
-            String drStr = dr.ToString().Replace('/', '-');*/
-            string b = taches.Date_debut_theorique.ToString("yyyy-MM-dd hh:mm:ss");
-            string a = taches.Date_debut_reelle.ToString("yyyy-MM-dd hh:mm:ss");
+            string debut_theorique = taches.Date_debut_theorique.ToString("yyyy-MM-dd hh:mm:ss");
+            string debut_reel = taches.Date_debut_reelle.ToString("yyyy-MM-dd hh:mm:ss");
 
-            Console.WriteLine(taches.Date_debut_theorique);
-
-            //Console.WriteLine(dtStr);
-            string insert = $"INSERT INTO taches(Libelle, Description, Id_user, Date_debut_theorique, Date_debut_reelle, Charge, Encours, Termine, Id_tache_liee) values ('{taches.Libelle}', '{taches.Description}', '{taches.Id_user}', '{b}', '{a}', {taches.Charge}, {taches.Encours}, {taches.Termine}, {taches.Id_tache_liee})";
+            string insert = $"INSERT INTO taches(Libelle, Description, Id_user, Date_debut_theorique, Date_debut_reelle, Charge, Encours, Termine, Id_tache_liee) values ('{taches.Libelle}', '{taches.Description}', '{taches.Id_user}', '{debut_theorique}', '{debut_reel}', {taches.Charge}, {taches.Encours}, {taches.Termine}, {taches.Id_tache_liee})";
             var conn = new DbConnection();
             var cmd = new MySqlCommand(insert, conn.Dbconn());
             MySqlDataReader sdr;
@@ -89,7 +80,10 @@ namespace NETCore_Back.Model
 
         public void Update(Taches taches)
         {
-            string update = $"UPDATE taches SET Libelle = '{taches.Libelle}', Description = '{taches.Description}', Id_user ='{taches.Id_user}', Date_debut_theorique = '{taches.Date_debut_theorique}', Date_debut_reelle = '{taches.Date_debut_reelle}', Charge = {taches.Charge}, Encours = {taches.Encours}, Termine = {taches.Termine}, Id_tache_liee = {taches.Id_tache_liee} WHERE Id = {taches.Id}";
+            string debut_theorique = taches.Date_debut_theorique.ToString("yyyy-MM-dd hh:mm:ss");
+            string debut_reel = taches.Date_debut_reelle.ToString("yyyy-MM-dd hh:mm:ss");
+
+            string update = $"UPDATE taches SET Libelle = '{taches.Libelle}', Description = '{taches.Description}', Id_user ='{taches.Id_user}', Date_debut_theorique = '{debut_theorique}', Date_debut_reelle = '{debut_reel}', Charge = {taches.Charge}, Encours = {taches.Encours}, Termine = {taches.Termine}, Id_tache_liee = {taches.Id_tache_liee} WHERE Id = {taches.Id}";
             var conn = new DbConnection();
             var cmd = new MySqlCommand(update, conn.Dbconn());
             MySqlDataReader sdr;
