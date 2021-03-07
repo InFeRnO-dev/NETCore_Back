@@ -8,6 +8,17 @@ namespace NETCore_Back.Model
 {
     public class ModelJalons
     {
+        public int GetLastId()
+        {
+            string select = "SELECT id from jalons order by id desc limit 1";
+            var conn = new DbConnection();
+            var cmd = new MySqlCommand(select, conn.Dbconn());
+            MySqlDataReader sdr;
+            sdr = cmd.ExecuteReader();
+            sdr.Read();
+            return sdr.GetInt32(0);
+        }
+
         public List<Jalons> GetAll()
         {
             var jalons = new List<Jalons>();
@@ -46,7 +57,10 @@ namespace NETCore_Back.Model
         }
         public void Insert(Jalons jalons)
         {
-            string insert = $"INSERT INTO jalons(Libelle, Id_user, Date_livraison_prevue, Date_livraison_reelle) values ('{jalons.Libelle}', '{jalons.Id_user}', '{jalons.Date_livraison_prevue}', '{jalons.Date_livraison_reelle}')";
+            string debut_prevue = jalons.Date_livraison_prevue.ToString("yyyy-MM-dd hh:mm:ss");
+            string debut_reel = jalons.Date_livraison_reelle.ToString("yyyy-MM-dd hh:mm:ss");
+
+            string insert = $"INSERT INTO jalons(Libelle, Id_user, Date_livraison_prevue, Date_livraison_reelle) values ('{jalons.Libelle}', '{jalons.Id_user}', '{debut_prevue}', '{debut_reel}')";
             var conn = new DbConnection();
             var cmd = new MySqlCommand(insert, conn.Dbconn());
             MySqlDataReader sdr;
@@ -54,18 +68,21 @@ namespace NETCore_Back.Model
             sdr.Read();
         }
 
-        public void Update(int id, Jalons jalons)
+        public void Update(Jalons jalons)
         {
-            string update = $"UPDATE jalons SET Libelle = '{jalons.Libelle}', Id_user ='{jalons.Id_user}', Date_livraison_prevue = '{jalons.Date_livraison_prevue}', Date_livraison_reelle = '{jalons.Date_livraison_reelle}' WHERE Id = {id}";
+            string debut_prevue = jalons.Date_livraison_prevue.ToString("yyyy-MM-dd hh:mm:ss");
+            string debut_reel = jalons.Date_livraison_reelle.ToString("yyyy-MM-dd hh:mm:ss");
+
+            string update = $"UPDATE jalons SET Libelle = '{jalons.Libelle}', Id_user ='{jalons.Id_user}', Date_livraison_prevue = '{debut_prevue}', Date_livraison_reelle = '{debut_reel}' WHERE Id = {jalons.Id}";
             var conn = new DbConnection();
             var cmd = new MySqlCommand(update, conn.Dbconn());
             MySqlDataReader sdr;
             sdr = cmd.ExecuteReader();
             sdr.Read();
         }
-        public void Delete(int id)
+        public void Delete(Jalons jalons)
         {
-            string delete = $"DELETE FROM jalons WHERE id = {id}";
+            string delete = $"DELETE FROM jalons WHERE id = {jalons.Id}";
             var conn = new DbConnection();
             var cmd = new MySqlCommand(delete, conn.Dbconn());
             MySqlDataReader sdr;

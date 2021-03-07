@@ -19,10 +19,24 @@ namespace NETCore_Back.Controllers
             _logger = logger;
         }
 
-        [HttpGet("exigence/{id}")]
-        public IEnumerable<Taches> GetAllByIdExigence(int id)
+        [HttpGet("exigence/jalons/{id}")]
+        public IEnumerable<Jalons> GetJalonsByIdExigence(int id)
+        {
+            var jalons = new ModelLiaison().GetJalonsByIdExigence(id);
+            return jalons.ToArray();
+        }
+
+        [HttpGet("exigence/taches/{id}")]
+        public IEnumerable<Taches> GetTachesByIdExigence(int id)
         {
             var taches = new ModelLiaison().GetTachesByIdExigence(id);
+            return taches.ToArray();
+        }
+
+        [HttpGet("jalon/taches/{id}")]
+        public IEnumerable<Taches> GetTachesByIdJalon(int id)
+        {
+            var taches = new ModelLiaison().GetTachesByIdJalon(id);
             return taches.ToArray();
         }
 
@@ -39,10 +53,15 @@ namespace NETCore_Back.Controllers
             new ModelLiaison().InsertExigenceForProjet(liaison);
         }
 
-        [HttpPost("exigence")]
-        public void InsertTacheForExigence(Liaison liaison)
+        [HttpPost("jalon/exigence/tache")]
+        public void InsertTacheIntoJalonExigence(Liaison liaison)
         {
-            new ModelLiaison().InsertTacheForExigence(liaison);
+            new ModelLiaison().InsertTacheIntoJalonExigence(liaison);
+        }
+        [HttpPost("exigence/jalon")]
+        public void InsertJalonForExigence(Liaison liaison)
+        {
+            new ModelLiaison().InsertJalonForExigence(liaison);
         }
     }
 }

@@ -19,6 +19,12 @@ namespace NETCore_Back.Controllers
             _logger = logger;
         }
 
+        [HttpGet("lastid")]
+        public int GetLastId()
+        {
+            return new ModelJalons().GetLastId();
+        }
+
         [HttpGet]
         public IEnumerable<Jalons> Get()
         {
@@ -33,22 +39,22 @@ namespace NETCore_Back.Controllers
             return jalon;
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public void Insert(Jalons jalons)
         {
             new ModelJalons().Insert(jalons);
         }
 
-        [HttpPut("edit/{id}")]
-        public void Update(int id, Jalons jalons)
+        [HttpPut]
+        public void Update(Jalons jalons)
         {
-            new ModelJalons().Update(id, jalons);
+            new ModelJalons().Update(jalons);
         }
 
-        [HttpDelete("delete/{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public void Delete(Jalons jalons)
         {
-            new ModelJalons().Delete(id);
+            new ModelJalons().Delete(jalons);
         }
     }
 }
